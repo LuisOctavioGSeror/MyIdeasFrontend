@@ -175,8 +175,10 @@ const Ideas = () => {
     navigate("/login");
   };
 
+  const hasIdeas = !isLoading && ideas.length > 0;
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="flex min-h-screen flex-col bg-background">
       <header className="sticky top-0 z-10 border-b bg-card/80 backdrop-blur-sm">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">
           <div className="flex items-center gap-2">
@@ -205,7 +207,7 @@ const Ideas = () => {
         </div>
       </header>
 
-      <main className="mx-auto max-w-4xl px-4 py-8">
+      <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col px-4 py-8">
         <div className="mb-6 flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-foreground">My Ideas</h1>
@@ -414,7 +416,7 @@ const Ideas = () => {
             </p>
           </div>
         ) : (
-          <div className="space-y-6">
+          <div className="space-y-6 pb-20">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {ideas.map((idea, i) => (
                 <Card
@@ -478,27 +480,30 @@ const Ideas = () => {
                 </Card>
               ))}
             </div>
-
-            <div className="flex items-center justify-between">
-              <Button
-                variant="outline"
-                disabled={page === 0}
-                onClick={() => setPage((p) => Math.max(0, p - 1))}
-              >
-                Previous
-              </Button>
-              <span className="text-sm text-muted-foreground">Page {page + 1}</span>
-              <Button
-                variant="outline"
-                disabled={ideas.length < PAGE_SIZE}
-                onClick={() => setPage((p) => p + 1)}
-              >
-                Next
-              </Button>
-            </div>
           </div>
         )}
       </main>
+      {hasIdeas && (
+        <div className="sticky bottom-0 z-10 border-t bg-card/80 backdrop-blur-sm">
+          <div className="mx-auto flex w-full max-w-4xl items-center justify-between px-4 py-3">
+            <Button
+              variant="outline"
+              disabled={page === 0}
+              onClick={() => setPage((p) => Math.max(0, p - 1))}
+            >
+              Previous
+            </Button>
+            <span className="text-sm text-muted-foreground">Page {page + 1}</span>
+            <Button
+              variant="outline"
+              disabled={ideas.length < PAGE_SIZE}
+              onClick={() => setPage((p) => p + 1)}
+            >
+              Next
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
