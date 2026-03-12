@@ -1,0 +1,9 @@
+# Force npm (not Bun) for install/build so Railway uses package-lock.json
+[phases.setup]
+nixPkgs = ["nodejs_20"]
+
+[phases.install]
+cmds = ["npm ci"]
+
+[phases.build]
+cmds = ["npm run build"]
